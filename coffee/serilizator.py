@@ -1,4 +1,4 @@
-from .models import Drink, Category
+from .models import Drink, Category, Order
 from rest_framework import serializers
 
 
@@ -19,4 +19,14 @@ class Categoryserializers(serializers.ModelSerializer):
         fields = [
             'id',
             'name'
+        ]
+
+
+class Orderserializers(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = [
+            'id',
+            'date',
+            'drink'
         ]
