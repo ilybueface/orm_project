@@ -1,6 +1,3 @@
-from unicodedata import category
-
-from django.views.generic import detail
 from rest_framework import viewsets
 from coffee.serilizator import Drinkserializers, Categoryserializers, Orderserializers
 from .models import Drink, Category, Order
@@ -40,7 +37,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
         ctg_drinks = Drink.objects.filter(category=pk)
         serializer = Drinkserializers(ctg_drinks, many=True)
         return Response(serializer.data)
-
 
 
 class OrderViewSet(viewsets.ModelViewSet):
