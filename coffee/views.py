@@ -1,10 +1,12 @@
 from rest_framework import viewsets
 from coffee.serilizator import Drinkserializers, Categoryserializers, Orderserializers
 from .models import Drink, Category, Order
+from .permissions import IsAdminOrReadOnly
 from .filter import DrinkFilter
 from .pagination import CustomMetaPagination
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 
 class DrinkViewSet(viewsets.ModelViewSet):
@@ -13,6 +15,7 @@ class DrinkViewSet(viewsets.ModelViewSet):
     filterset_fields = ['category__id', 'price']
     filterset_class = DrinkFilter
     pagination_class = CustomMetaPagination
+    permission_classes = [IsAdminOrReadOnly]
 
     @action(detail=False, methods=['get'])
     def cheap_drinks(self, request):
@@ -36,6 +39,7 @@ class DrinkViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = Categoryserializers
+    permission_classes = [AllowAny]
 
     @action(detail=True, methods=['get'])
     def all_drinks(self, request, pk=None):
@@ -47,6 +51,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = Orderserializers
+    permission_classes = [IsAuthenticated]
 
     @action(detail=True, methods=['GET'])
     def today_orders(self, request, pk=None):
