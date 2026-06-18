@@ -72,3 +72,17 @@ main h2 {
     padding: 16px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+
+@media (max-width: 768px) {
+    .navbar {padding: 12px 16px}
+    .navbar h1 {font-size: 20px}
+    .drinks-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1024px) {
+    .drinks-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

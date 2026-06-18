@@ -1,12 +1,13 @@
-from rest_framework import viewsets
 from coffee.serilizator import (
     Drinkserializers,
     Categoryserializers,
     Orderserializers,
     Reviewserializers,
     Promotionserializers,
+    Favoriteserializer,
 )
-from .models import Drink, Category, Order, Review, Promotion
+from rest_framework import viewsets
+from .models import Drink, Category, Order, Review, Promotion, Favorite
 from .permissions import IsAdminOrReadOnly
 from .filter import DrinkFilter
 from .pagination import CustomMetaPagination
@@ -98,3 +99,15 @@ class PromotionViewSet(viewsets.ModelViewSet):
         drinks = serializer.validated_data.pop('drinks_ids')
         promotion = serializer.save()
         promotion.drinks.set(drinks)
+
+
+class FavoriteViewSet(viewsets.ModelViewSet):
+    serializer_class = Favoriteserializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+    def get_queryset(self):
+        return Favorite.objects.filter(user=self.request.user)

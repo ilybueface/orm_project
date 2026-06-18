@@ -1,4 +1,4 @@
-from .models import Drink, Category, Order, Review, Promotion
+from .models import Drink, Category, Order, Review, Promotion, Favorite
 from rest_framework import serializers
 
 
@@ -73,4 +73,17 @@ class Promotionserializers(serializers.ModelSerializer):
             'title',
             'discount_percent',
             'active_until',
+        ]
+
+
+class Favoriteserializer(serializers.ModelSerializer):
+    drink = Drinkserializers(read_only=True)
+    drink_id = serializers.IntegerField(write_only=True)
+
+    class Meta:
+        model = Favorite
+        fields = [
+            'drink',
+            'drink_id',
+            'added_at',
         ]
