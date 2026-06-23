@@ -5,6 +5,7 @@ from coffee.views import (
     ReviewViewSet,
     PromotionViewSet,
     FavoriteViewSet,
+    IngredientsViewSet,
 )
 from rest_framework_nested import routers
 
@@ -18,6 +19,7 @@ router.register(r'category', CategoryViewSet, basename='Category')
 router.register(r'review', ReviewViewSet, basename='Review')
 router.register(r'promotion', PromotionViewSet, basename='Promotion')
 router.register(r'favorite', FavoriteViewSet, basename='Favorite')
+router.register(r'ingredient', IngredientsViewSet, basename='Ingredient')
 
 
 urlpatterns = router.urls + drinks_router.urls

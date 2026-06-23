@@ -1,5 +1,3 @@
-from tkinter.constants import CASCADE
-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -54,7 +52,7 @@ class Promotion(models.Model):
     drinks = models.ManyToManyField(Drink)
 
     def __str__(self):
-        return f"{self.drinks} {self.title} "
+        return f"{self.title} {self.discount_percent}"
 
 
 class Favorite(models.Model):
@@ -64,3 +62,13 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f"{self.user} {self.drink}"
+
+
+class Ingredients(models.Model):
+    name = models.CharField(max_length=200)
+    is_allergen = models.BooleanField()
+    extra_price = models.IntegerField()
+    drinks = models.ManyToManyField(Drink)
+
+    def __str__(self):
+        return f"{self.name} {self.is_allergen} {self.extra_price}"

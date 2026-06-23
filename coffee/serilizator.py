@@ -1,4 +1,14 @@
-from .models import Drink, Category, Order, Review, Promotion, Favorite
+from rest_framework.relations import PrimaryKeyRelatedField
+
+from .models import (
+    Drink,
+    Category,
+    Order,
+    Review,
+    Promotion,
+    Favorite,
+    Ingredients,
+)
 from rest_framework import serializers
 
 
@@ -86,4 +96,23 @@ class Favoriteserializer(serializers.ModelSerializer):
             'drink',
             'drink_id',
             'added_at',
+        ]
+
+
+class Ingredientsserializer(serializers.ModelSerializer):
+    drinks = Drinkserializers(read_only=True, many=True)
+    drinks_ids = serializers.PrimaryKeyRelatedField(
+        write_only=True,
+        many=True,
+        queryset=Drink.objects.all()
+    )
+
+    class Meta:
+        model = Ingredients
+        fields = [
+            'drinks',
+            'drinks_ids',
+            'is_allergen',
+            'name',
+            'extra_price',
         ]

@@ -5,10 +5,19 @@ from coffee.serilizator import (
     Reviewserializers,
     Promotionserializers,
     Favoriteserializer,
+    Ingredientsserializer,
 )
 from rest_framework.filters import SearchFilter
 from rest_framework import viewsets
-from .models import Drink, Category, Order, Review, Promotion, Favorite
+from .models import (
+    Drink,
+    Category,
+    Order,
+    Review,
+    Promotion,
+    Favorite,
+    Ingredients,
+)
 from .permissions import IsAdminOrReadOnly
 from .filter import DrinkFilter
 from .pagination import CustomMetaPagination
@@ -21,12 +30,12 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 class DrinkViewSet(viewsets.ModelViewSet):
     queryset = Drink.objects.all()
     serializer_class = Drinkserializers
-    filterset_fields = ['category__id', 'price']
     filterset_class = DrinkFilter
     pagination_class = CustomMetaPagination
     permission_classes = [IsAdminOrReadOnly]
     search_fields = ['name', 'category__name']
     ordering_fields = ['price', 'name']
+    filterset_fields = ['category__id', 'price']
 
     @action(detail=False, methods=['get'])
     def cheap_drinks(self, request):
@@ -50,7 +59,7 @@ class DrinkViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = Categoryserializers
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminOrReadOnly]
 
     @action(detail=True, methods=['get'])
     def all_drinks(self, request, pk=None):
@@ -119,3 +128,14 @@ class FavoriteViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Favorite.objects.filter(user=self.request.user)
+
+
+class IngredientsViewSet(viewsets.ModelViewSet):
+    queryset = Ingredients.objects.all()
+    serializer_class = Ingredientsserializer
+    permission_classes = [IsAdminOrReadOnly]
+
+    def perform_create(self, serializer):
+        drinks = serializer.validated_data.pop('drinks_ids')
+        ingredients = serializer.save()
+        ingredients.drinks.set(drinks)
