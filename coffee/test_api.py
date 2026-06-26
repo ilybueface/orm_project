@@ -102,4 +102,3 @@ def test_wh_token_create():
                            format='json',
                            )
     assert response.status_code == 401
-

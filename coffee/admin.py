@@ -19,4 +19,3 @@ admin.site.register(Promotion)
 admin.site.register(Review)
 admin.site.register(Ingredient)
 admin.site.register(Favorite)
-

@@ -1,0 +1,7 @@
+Django==5.x.x
+djangorestframework==3.x.x
+django-filter==x.x
+django-cors-headers==x.x
+drf-nested-routers==x.x
+pytest==x.x
+pytest-django==x.x
