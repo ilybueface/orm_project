@@ -29,7 +29,7 @@ software licensing fees.
 ## Installation
 
 git clone https://github.com/ilybueface/SIMPLE_API_coffee
-cd first_orm_project
+cd SIMPLE_API_coffee
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py createsuperuser
