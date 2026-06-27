@@ -21,14 +21,14 @@ software licensing fees.
 ## Tech Stack
 
 - Python 3.14
-- Django 5.x
+- Django 6.0.6
 - Django REST Framework
 - SQLite
 - pytest
 
 ## Installation
 
-git clone https://github.com/ilybueface/first_orm_project
+git clone https://github.com/ilybueface/SIMPLE_API_coffee
 cd first_orm_project
 pip install -r requirements.txt
 python manage.py migrate
